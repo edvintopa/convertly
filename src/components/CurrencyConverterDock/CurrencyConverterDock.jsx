@@ -1,26 +1,8 @@
-import { useState } from 'react';
 import AmountInput from './AmountInput';
 import DropDownSelector from './DropDownSelector';
 import { ArrowsRightLeftIcon } from '@heroicons/react/24/outline';
 
-function CurrencyConverterDock() {
-    const [amount, setAmount] = useState('');
-    const [fromCurrency, setFromCurrency] = useState('EUR');
-    const [toCurrency, setToCurrency] = useState('SEK');
-
-    //load with api
-    const currencies = [
-        { code: 'USD', name: 'US Dollar' },
-        { code: 'EUR', name: 'Euro' },
-        { code: 'SEK', name: 'Swedish Krona' },
-        { code: 'GBP', name: 'British Pound' },
-        { code: 'JPY', name: 'Japanese Yen' },
-        { code: 'CAD', name: 'Canadian Dollar' },
-        { code: 'AUD', name: 'Australian Dollar' },
-        { code: 'CHF', name: 'Swiss Franc' },
-        { code: 'NOK', name: 'Norwegian Krone' },
-        { code: 'DKK', name: 'Danish Krone' }
-    ];
+function CurrencyConverterDock({ amount, setAmount, fromCurrency, setFromCurrency, toCurrency, setToCurrency, currencies }) {
 
     const handleSwapCurrencies = () => {
         setFromCurrency(toCurrency);
