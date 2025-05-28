@@ -1,7 +1,9 @@
+import CurrencyConverterDock from "../../components/CurrencyConverterDock/CurrencyConverter"
+
 function Home() {
   return (
     <>
-        <h1>convertly</h1>
+        <CurrencyConverterDock />
     </>
   )
 }
