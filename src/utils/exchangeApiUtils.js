@@ -57,13 +57,13 @@ export const convertCurrency = (amount, fromCurrency, toCurrency, rates) => {
     // From EUR, multiply by target rate
     if (fromCode === "eur") {
         const rate = rates[toCode];
-        return amount * rate;
+        return (amount * rate).toFixed(2);
     }
 
     // To EUR, divide by source rate
     if (toCode === "eur") {
         const rate = rates[fromCode];
-        return amount / rate;
+        return (amount / rate).toFixed(2);
     }
 
     // Other conversions
@@ -71,5 +71,5 @@ export const convertCurrency = (amount, fromCurrency, toCurrency, rates) => {
     const toRate = rates[toCode];
 
     const eur = amount / fromRate;
-    return eur * toRate;
+    return (eur * toRate).toFixed(2);
 }
