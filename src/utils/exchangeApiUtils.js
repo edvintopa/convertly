@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const CURRENCIES_API_URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies.json";  // Names and codes
-const CURRENCY_VALUES_API_URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json"; // Values in relation to EUR
+const CURRENCY_RATES_API_URL = "https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/eur.json"; // Values in relation to EUR
 
 export const fetchCurrencies = async () => {
     try {
@@ -30,5 +30,14 @@ export const fetchCurrencies = async () => {
             { code: 'NOK', name: 'Norwegian Krone' },
             { code: 'DKK', name: 'Danish Krone' }
         ];
+    }
+}
+
+export const fetchRates = async () => {
+    try {
+        const response = await axios.get(CURRENCY_RATES_API_URL);
+        return response.data.eur;
+    } catch (error) {
+        console.error("Error fetching exchange rates", error);
     }
 }

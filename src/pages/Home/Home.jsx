@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { fetchCurrencies } from '../../utils/exchangeApiUtils';
+import { fetchCurrencies, fetchRates } from '../../utils/exchangeApiUtils';
 import CurrencyConverterDock from "../../components/CurrencyConverterDock/CurrencyConverterDock"
 import ResultDisplay from "../../components/ResultDisplay/ResultDisplay"
 
@@ -36,6 +36,7 @@ const dockVariants = {
 function Home() {
   const [amount, setAmount] = useState('');
   const [currencies, setCurrencies] = useState([]);
+  const [rates, setRates] = useState([]);
   const [fromCurrency, setFromCurrency] = useState('EUR');
   const [toCurrency, setToCurrency] = useState('SEK');
 
@@ -45,7 +46,13 @@ function Home() {
       setCurrencies(currencyData);
     };
 
+    const loadRates = async () => {
+      const rateData = await fetchRates();
+      setRates(rateData);
+    }
+
     loadCurrencies();
+    loadRates();
   }, []);
 
   const hasAmount = amount && amount !== '';
