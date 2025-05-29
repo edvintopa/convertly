@@ -37,9 +37,9 @@ function CurrencyConverterDock({ amount, setAmount, fromCurrency, setFromCurrenc
                     <motion.button
                         onClick={handleSwapCurrencies}
                         whileTap={{ rotate: 180, scale: 0.8 }}
-                        className="p-2 rounded-full bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50"
+                        className="p-2 rounded-full bg-neutral-50 dark:bg-neutral-900/30 hover:bg-neutral-100 dark:hover:bg-neutral-900/50"
                     >
-                        <ArrowsRightLeftIcon className="w-5 h-5 text-blue-600 dark:text-blue-400 rotate-90 md:rotate-0" />
+                        <ArrowsRightLeftIcon className="w-5 h-5 rotate-90 md:rotate-0" />
                     </motion.button>
                 </div>
 
