@@ -13,7 +13,7 @@ function CurrencyConverterDock({ amount, setAmount, fromCurrency, setFromCurrenc
     return (
         <div className="bg-white dark:bg-neutral-800 rounded-2xl shadow-lg p-6">
 
-            <div className="flex items-end gap-4">
+            <div className="flex flex-col md:flex-row items-stretch md:items-end gap-4">
                 <div className="flex-1">
                     <AmountInput
                         label="Amount"
@@ -37,9 +37,9 @@ function CurrencyConverterDock({ amount, setAmount, fromCurrency, setFromCurrenc
                     <motion.button
                         onClick={handleSwapCurrencies}
                         whileTap={{ rotate: 180, scale: 0.8 }}
-                        className="p-2 rounded-full bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50"
+                        className="p-2 rounded-full bg-neutral-50 dark:bg-neutral-900/30 hover:bg-neutral-100 dark:hover:bg-neutral-900/50"
                     >
-                        <ArrowsRightLeftIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                        <ArrowsRightLeftIcon className="w-5 h-5 rotate-90 md:rotate-0" />
                     </motion.button>
                 </div>
 
