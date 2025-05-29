@@ -1,54 +1,65 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { fetchCurrencies, fetchRates, convertCurrency } from '../../utils/exchangeApiUtils';
 import CurrencyConverterDock from "../../components/CurrencyConverterDock/CurrencyConverterDock"
 import ResultDisplay from "../../components/ResultDisplay/ResultDisplay"
 
 // Animation variables "keys"
 const resultDisplayVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: -20 
+  hidden: {
+    opacity: 0,
+    y: -20
   },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.2 }
   },
-  exit: { 
-    opacity: 0, 
+  exit: {
+    opacity: 0,
     y: -20,
     transition: { duration: 0.2 }
   }
 };
 
 const dockVariants = {
-  noResult: { 
+  noResult: {
     y: 0,
     transition: { duration: 0.1 }
   },
-  result: { 
+  result: {
     y: 20,
     transition: { duration: 0.1 }
   }
 };
 
 function Home() {
+  const [currencies, setCurrencies] = useState([]);
+  const [rates, setRates] = useState([]);
   const [amount, setAmount] = useState('');
   const [fromCurrency, setFromCurrency] = useState('EUR');
   const [toCurrency, setToCurrency] = useState('SEK');
+  const [convertedAmount, setConvertedAmount] = useState('');
 
-  const currencies = [
-    { code: 'USD', name: 'US Dollar' },
-    { code: 'EUR', name: 'Euro' },
-    { code: 'SEK', name: 'Swedish Krona' },
-    { code: 'GBP', name: 'British Pound' },
-    { code: 'JPY', name: 'Japanese Yen' },
-    { code: 'CAD', name: 'Canadian Dollar' },
-    { code: 'AUD', name: 'Australian Dollar' },
-    { code: 'CHF', name: 'Swiss Franc' },
-    { code: 'NOK', name: 'Norwegian Krone' },
-    { code: 'DKK', name: 'Danish Krone' }
-  ];
+  useEffect(() => {
+    const loadCurrencies = async () => {
+      const currencyData = await fetchCurrencies();
+      setCurrencies(currencyData);
+    };
+
+    const loadRates = async () => {
+      const rateData = await fetchRates();
+      setRates(rateData);
+    }
+
+    loadCurrencies();
+    loadRates();
+  }, []);
+
+  useEffect(() => {
+    const result = convertCurrency(amount, fromCurrency, toCurrency, rates);
+    setConvertedAmount(result);
+  }, [amount, fromCurrency, toCurrency]);
 
   const hasAmount = amount && amount !== '';
 
@@ -66,7 +77,7 @@ function Home() {
               amount={amount}
               fromCurrency={fromCurrency}
               toCurrency={toCurrency}
-              convertedAmount={"?"}
+              convertedAmount={convertedAmount}
             />
           </motion.div>
         )}
