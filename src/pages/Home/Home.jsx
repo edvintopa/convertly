@@ -1,32 +1,33 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { fetchCurrencies } from '../../utils/exchangeApiUtils';
 import CurrencyConverterDock from "../../components/CurrencyConverterDock/CurrencyConverterDock"
 import ResultDisplay from "../../components/ResultDisplay/ResultDisplay"
 
 // Animation variables "keys"
 const resultDisplayVariants = {
-  hidden: { 
-    opacity: 0, 
-    y: -20 
+  hidden: {
+    opacity: 0,
+    y: -20
   },
-  visible: { 
-    opacity: 1, 
+  visible: {
+    opacity: 1,
     y: 0,
     transition: { duration: 0.2 }
   },
-  exit: { 
-    opacity: 0, 
+  exit: {
+    opacity: 0,
     y: -20,
     transition: { duration: 0.2 }
   }
 };
 
 const dockVariants = {
-  noResult: { 
+  noResult: {
     y: 0,
     transition: { duration: 0.1 }
   },
-  result: { 
+  result: {
     y: 20,
     transition: { duration: 0.1 }
   }
@@ -34,21 +35,18 @@ const dockVariants = {
 
 function Home() {
   const [amount, setAmount] = useState('');
+  const [currencies, setCurrencies] = useState([]);
   const [fromCurrency, setFromCurrency] = useState('EUR');
   const [toCurrency, setToCurrency] = useState('SEK');
 
-  const currencies = [
-    { code: 'USD', name: 'US Dollar' },
-    { code: 'EUR', name: 'Euro' },
-    { code: 'SEK', name: 'Swedish Krona' },
-    { code: 'GBP', name: 'British Pound' },
-    { code: 'JPY', name: 'Japanese Yen' },
-    { code: 'CAD', name: 'Canadian Dollar' },
-    { code: 'AUD', name: 'Australian Dollar' },
-    { code: 'CHF', name: 'Swiss Franc' },
-    { code: 'NOK', name: 'Norwegian Krone' },
-    { code: 'DKK', name: 'Danish Krone' }
-  ];
+  useEffect(() => {
+    const loadCurrencies = async () => {
+      const currencyData = await fetchCurrencies();
+      setCurrencies(currencyData);
+    };
+
+    loadCurrencies();
+  }, []);
 
   const hasAmount = amount && amount !== '';
 
