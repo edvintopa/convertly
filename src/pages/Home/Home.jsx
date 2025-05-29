@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { fetchCurrencies, fetchRates } from '../../utils/exchangeApiUtils';
+import { fetchCurrencies, fetchRates, convertCurrency } from '../../utils/exchangeApiUtils';
 import CurrencyConverterDock from "../../components/CurrencyConverterDock/CurrencyConverterDock"
 import ResultDisplay from "../../components/ResultDisplay/ResultDisplay"
 
@@ -34,11 +34,12 @@ const dockVariants = {
 };
 
 function Home() {
-  const [amount, setAmount] = useState('');
   const [currencies, setCurrencies] = useState([]);
   const [rates, setRates] = useState([]);
+  const [amount, setAmount] = useState('');
   const [fromCurrency, setFromCurrency] = useState('EUR');
   const [toCurrency, setToCurrency] = useState('SEK');
+  const [convertedAmount, setConvertedAmount] = useState('');
 
   useEffect(() => {
     const loadCurrencies = async () => {
@@ -54,6 +55,11 @@ function Home() {
     loadCurrencies();
     loadRates();
   }, []);
+
+  useEffect(() => {
+    const result = convertCurrency(amount, fromCurrency, toCurrency, rates);
+    setConvertedAmount(result);
+  }, [amount, fromCurrency, toCurrency]);
 
   const hasAmount = amount && amount !== '';
 
@@ -71,7 +77,7 @@ function Home() {
               amount={amount}
               fromCurrency={fromCurrency}
               toCurrency={toCurrency}
-              convertedAmount={"?"}
+              convertedAmount={convertedAmount}
             />
           </motion.div>
         )}

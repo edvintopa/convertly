@@ -41,3 +41,35 @@ export const fetchRates = async () => {
         console.error("Error fetching exchange rates", error);
     }
 }
+
+export const convertCurrency = (amount, fromCurrency, toCurrency, rates) => {
+    
+    // Validate parameters
+    if (!amount || (amount <= 0) || !fromCurrency || !toCurrency || !rates ) { return; }
+
+    // Api sends codes in lowercase
+    const fromCode = fromCurrency.toLowerCase();
+    const toCode = toCurrency.toLowerCase();
+
+    // 1 banana = 1 banana
+    if (fromCode === toCode) { return amount; }
+
+    // From EUR, multiply by target rate
+    if (fromCode === "eur") {
+        const rate = rates[toCode];
+        return amount * rate;
+    }
+
+    // To EUR, divide by source rate
+    if (toCode === "eur") {
+        const rate = rates[fromCode];
+        return amount / rate;
+    }
+
+    // Other conversions
+    const fromRate = rates[fromCode];
+    const toRate = rates[toCode];
+
+    const eur = amount / fromRate;
+    return eur * toRate;
+}
