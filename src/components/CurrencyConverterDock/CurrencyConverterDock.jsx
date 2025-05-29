@@ -1,6 +1,7 @@
 import AmountInput from './AmountInput';
 import DropDownSelector from './DropDownSelector';
 import { ArrowsRightLeftIcon } from '@heroicons/react/24/outline';
+import { motion } from 'framer-motion';
 
 function CurrencyConverterDock({ amount, setAmount, fromCurrency, setFromCurrency, toCurrency, setToCurrency, currencies }) {
 
@@ -33,13 +34,13 @@ function CurrencyConverterDock({ amount, setAmount, fromCurrency, setFromCurrenc
                 </div>
 
                 <div className="flex-shrink-1">
-                    <button
+                    <motion.button
                         onClick={handleSwapCurrencies}
-                        className="p-2 rounded-full bg-blue-50 dark:bg-blue-900/30
-                        hover:bg-blue-100 dark:hover:bg-blue-900/50"
+                        whileTap={{ rotate: 180, scale: 0.8 }}
+                        className="p-2 rounded-full bg-blue-50 dark:bg-blue-900/30 hover:bg-blue-100 dark:hover:bg-blue-900/50"
                     >
                         <ArrowsRightLeftIcon className="w-5 h-5 text-blue-600 dark:text-blue-400" />
-                    </button>
+                    </motion.button>
                 </div>
 
                 <div className="flex-1">
